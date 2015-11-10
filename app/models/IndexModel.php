@@ -7,5 +7,6 @@ class IndexModel extends ModelBase{
 			print($result['id']);
 			print($result['name'] . '<br>');
 	    }
+	    echo '<a href="/hello/hello" title="">link</a>';
 	}
 }
