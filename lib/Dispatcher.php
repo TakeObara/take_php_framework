@@ -12,10 +12,9 @@ class Dispatcher {
 		 if ('' != $param) {
             $params = explode('/', $param);
         }
-
-		$controller = 'index';
-		if(1 < count($params)){
-			$controller = $params[1];
+		$controller = CTRL;
+		if(IS_WEBROOT + 1 < count($params)){
+			$controller = $params[IS_WEBROOT + 1];
 		}
 		if(!$controller){
 			header('404 not found');
@@ -23,11 +22,11 @@ class Dispatcher {
 		}
 		$controllerInstance = $this->getControllerInstance($controller);
 
-		$action = 'index';
-		if(2 < count($params)){
-			$action = $params[2];
+		$action = ACTION;
+		if(IS_WEBROOT + 2 < count($params)){
+			$action = $params[IS_WEBROOT + 2];
 		}
-		if(!method_exists($controllerInstance,$action.'Action')){
+		if(!method_exists($controllerInstance, $action.'Action')){
 			header('404 not found');
 			exit ;
 		}
@@ -38,7 +37,7 @@ class Dispatcher {
 
 	private function getControllerInstance($controller){
 		$controllerName = ucfirst(strtolower($controller).'Controller');
-		$controllerFileName = sprintf('%s/app/controllers/%s.php',$this->sysRoot,$controllerName);
+		$controllerFileName = sprintf('%s/app/controllers/%s.php', $this->sysRoot, $controllerName);
 		if(!file_exists($controllerFileName)){
 			return null;
 		}

@@ -14,6 +14,7 @@ abstract class RequestVariables{
 		if(null === $key){
 			$ret = $this->_values;
 		}
+		return $ret;
 	}
 
 	public function has($key){

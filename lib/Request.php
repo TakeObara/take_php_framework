@@ -5,31 +5,31 @@ require_once ROOT.'/lib/QueryString.php';
 
 class Request
 {
-	private $post;
-	private $query;
+	private $_post;
+	private $_query;
 
 	public function __construct(){
-		$this->post = new Post();
-		$this->query = new QueryString();
+		$this->_post = new Post();
+		$this->_query = new QueryString();
 	}
 
 	public function getPost($key = null){
 		if(null === $key){
-			return $this->post->get();
+			return $this->_post->get();
 		}
 		if(!$this->post->has($key)){
 			return null;
 		}
-		return $this->post->get();
+		return $this->_post->get();
 	}
 
 	public function getQuery($key = null){
 		if(null === $key){
-			return $this->query->get();
+			return $this->_query->get();
 		}
-		if(!$this->query->has($key)){
+		if(!$this->_query->has($key)){
 			return null;
 		}
-		return $this->query->get();	
+		return $this->_query->get();	
 	}
 }

@@ -5,4 +5,5 @@ class HelloController extends ControllerBase{
 	}
 	public function aaaAction(){
 		echo 'aaa world';
-	}}
+	}
+}

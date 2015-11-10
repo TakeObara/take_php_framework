@@ -4,10 +4,11 @@ require_once ROOT.'/lib/Request.php';
 
 abstract class ControllerBase{
 	protected $systemRoot;
-	protected $controller = 'index';
-	protected $action = 'index';
+	protected $controller = CTRL;
+	protected $action = ACTION;
 	protected $request;
 	protected $templatePath;
+	protected $model;
 
 	public function __construct(){
 		$this->request = new Request();
@@ -19,20 +20,25 @@ abstract class ControllerBase{
 
 	public function setControllerAction($controller,$action){
 		$this->controller = $controller;
-		$this->action = $action;
+		$this->action     = $action;
 	}
 
 	public function run(){
 		try{
-			require ROOT.'/app/views/header.php';
+			$model = ucfirst($this -> controller) . 'Model';
+			if(file_exists(ROOT.sprintf('/app/models/%s.php', $model))){
+				require_once ROOT.sprintf('/app/models/%s.php', $model);
+				$this->model = new $model();
+			}
+			require ROOT.'/app/views/elements/header.php';
 			$this->preAction();
-			$methodName = sprintf('%sAction',$this->action);
+			$methodName = sprintf('%sAction', $this->action);
 			$this->$methodName();
-			require ROOT.'/app/views/footer.php';
+			require ROOT.'/app/views/elements/footer.php';
 		}catch(Exception $e){
-			die("Error:".$e);
+			die("Error:" . $e);
 		}
 	}
-	// 共通処理
+
 	protected function preAction(){}
 }
